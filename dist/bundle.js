@@ -21861,11 +21861,21 @@
 
 	      _axios2.default.get('http://hipsterjesus.com/api?paras=' + this.state.paras + '&html=' + this.state.html).then(function (response) {
 	        _this2.setState({ text: response.data.text }, function () {
-	          console.log(this.state);
+	          // console.log(this.state);
 	        });
 	      }).catch(function (err) {
 	        console.log(err);
 	      });
+	    }
+	  }, {
+	    key: 'changeParas',
+	    value: function changeParas(number) {
+	      this.setState({ paras: number }, this.getText);
+	    }
+	  }, {
+	    key: 'showHtml',
+	    value: function showHtml(x) {
+	      this.setState({ html: x }, this.getText);
 	    }
 	  }, {
 	    key: 'render',
@@ -21895,7 +21905,7 @@
 	              null,
 	              'Paragraphs:'
 	            ),
-	            _react2.default.createElement(_Text2.default, { value: this.state.paras })
+	            _react2.default.createElement(_Text2.default, { value: this.state.paras, onChange: this.changeParas.bind(this) })
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -21905,7 +21915,7 @@
 	              null,
 	              'Include HTML tags?:'
 	            ),
-	            _react2.default.createElement(_Select2.default, { value: this.state.html })
+	            _react2.default.createElement(_Select2.default, { value: this.state.html, onChange: this.showHtml.bind(this) })
 	          )
 	        )
 	      );
@@ -23500,11 +23510,17 @@
 	    _this.state = {
 	      value: props.value
 	    };
-
 	    return _this;
 	  }
 
 	  _createClass(Select, [{
+	    key: "onChange",
+	    value: function onChange(e) {
+	      this.setState({ value: e.target.value }, function () {
+	        this.props.onChange(this.state.value);
+	      });
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -23512,11 +23528,16 @@
 	        null,
 	        _react2.default.createElement(
 	          "select",
-	          null,
+	          { onChange: this.onChange.bind(this) },
 	          _react2.default.createElement(
 	            "option",
-	            { value: "0" },
-	            "Select"
+	            { value: "true" },
+	            "Yes"
+	          ),
+	          _react2.default.createElement(
+	            "option",
+	            { value: "false" },
+	            "No"
 	          )
 	        )
 	      );
@@ -23563,17 +23584,23 @@
 	    _this.state = {
 	      value: props.value
 	    };
-
 	    return _this;
 	  }
 
 	  _createClass(Text, [{
+	    key: 'onChange',
+	    value: function onChange(e) {
+	      this.setState({ value: e.target.value }, function () {
+	        this.props.onChange(this.state.value);
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement('input', { type: 'text' })
+	        _react2.default.createElement('input', { type: 'number', value: this.state.value, onChange: this.onChange.bind(this) })
 	      );
 	    }
 	  }]);
